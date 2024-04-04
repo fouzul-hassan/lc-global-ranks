@@ -67,28 +67,28 @@ def create_bar_chart(entity_sum):
 
 
 # Function to calculate sum of points and unique LCs for each entity
-def calculate_entity_sum(df):
-    entity_sum = {}
-    for index, row in df.iterrows():
-        entity = row['Entity']
-        app_points = row['APP_Points']
-        apd_points = row['APD_Points']
-        unique_lcs = row['Unique_LCs_Points']
+# def calculate_entity_sum(df):
+#     entity_sum = {}
+#     for index, row in df.iterrows():
+#         entity = row['Entity']
+#         app_points = row['APP_Points']
+#         apd_points = row['APD_Points']
+#         unique_lcs = row['Unique_LCs_Points']
         
-        if entity not in entity_sum:
-            entity_sum[entity] = {
-                'APP_Points': app_points,
-                'APD_Points': apd_points,
-                'Unique_LCs_Points': unique_lcs,
-                'Total': app_points + apd_points + unique_lcs
-            }
-        else:
-            entity_sum[entity]['APP_Points'] += app_points
-            entity_sum[entity]['APD_Points'] += apd_points
-            entity_sum[entity]['Unique_LCs_Points'] += unique_lcs
-            entity_sum[entity]['Total'] += app_points + apd_points + unique_lcs
+#         if entity not in entity_sum:
+#             entity_sum[entity] = {
+#                 'APP_Points': app_points,
+#                 'APD_Points': apd_points,
+#                 'Unique_LCs_Points': unique_lcs,
+#                 'Total': app_points + apd_points + unique_lcs
+#             }
+#         else:
+#             entity_sum[entity]['APP_Points'] += app_points
+#             entity_sum[entity]['APD_Points'] += apd_points
+#             entity_sum[entity]['Unique_LCs_Points'] += unique_lcs
+#             entity_sum[entity]['Total'] += app_points + apd_points + unique_lcs
     
-    return entity_sum
+#     return entity_sum
 
 # Function to calculate the total 'Applied' related to each entity
 def calculate_total_applied(df):
@@ -115,16 +115,16 @@ def calculate_total_approved(df):
     return entity_approved_total
 
 # Function to calculate the total 'Unique_LCs' related to each entity
-def calculate_total_unique_lcs(df):
-    entity_unique_lcs_total = {}
-    for index, row in df.iterrows():
-        entity = row['Entity']
-        unique_lcs = row['Unique_LCs']
-        if entity not in entity_unique_lcs_total:
-            entity_unique_lcs_total[entity] = unique_lcs
-        else:
-            entity_unique_lcs_total[entity] += unique_lcs
-    return entity_unique_lcs_total
+# def calculate_total_unique_lcs(df):
+#     entity_unique_lcs_total = {}
+#     for index, row in df.iterrows():
+#         entity = row['Entity']
+#         unique_lcs = row['Unique_LCs']
+#         if entity not in entity_unique_lcs_total:
+#             entity_unique_lcs_total[entity] = unique_lcs
+#         else:
+#             entity_unique_lcs_total[entity] += unique_lcs
+#     return entity_unique_lcs_total
 
 # Function to calculate the count of 'Applied' related to each entity based on the selected function
 def count_applied_by_entity(df, selected_function):
@@ -182,19 +182,19 @@ def show_guide():
 def main():
     st.set_page_config(
     layout="wide",
-    page_title="Exchange Marathon Leaderboard - AIESEC in Sri Lanka",
+    page_title="AP Hackathon - Leaderboard",
     page_icon= icon_path,
     )   
 
-    st.title("Exchange Marathon Leaderboard - AIESEC in Sri Lanka")
+    st.title("AP Hackathon - Leaderboard")
 
-    with st.expander("**Dashboard Guide**"):
-        show_guide()
-        st.write("Click the **\"Dashboard Guide\"** again to hide the guide")
+    # with st.expander("**Dashboard Guide**"):
+    #     show_guide()
+    #     st.write("Click the **\"Dashboard Guide\"** again to hide the guide")
 
     st_autorefresh(interval=5 * 60 * 1000, key="data_refresh")  # Set interval to 5 minutes
     # URL to your Google Sheets data
-    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTDHYB01mBIwTaAwQuMVlKkgURbsjOkvlgMyXb3kjdwofvdtjzAZP8guv8AV9sNHvdRN280Sm9weEJ1/pub?gid=0&single=true&output=csv"
+    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ0DK7DqYpQQwLsb93-fbhDN1NhHLO9P7GNhyceIwWdj5EOFInWSflTbvDYrakkuEJlDHgDV25kP9w/pub?gid=1562137798&single=true&output=csv"
 
     # Load data using the cached function
     data = load_data(sheet_url)
@@ -212,16 +212,16 @@ def main():
 
             
             # Calculate entity sum
-            entity_sum = calculate_entity_sum(data)
+            # entity_sum = calculate_entity_sum(data)
 
             # Convert entity sum to JSON object
-            entity_sum_json = json.dumps(entity_sum)
+            # entity_sum_json = json.dumps(entity_sum)
 
-            # Create the bar chart
-            bar_chart = create_bar_chart(entity_sum)
+            # # Create the bar chart
+            # bar_chart = create_bar_chart(entity_sum)
 
             # Display the bar chart using Plotly Chart
-            st.plotly_chart(bar_chart, use_container_width=True)
+            # st.plotly_chart(bar_chart, use_container_width=True)
 
 
             # Barchart 1 : APP
@@ -234,7 +234,7 @@ def main():
             df_entity_applied_total.rename(columns={'index': 'Entity'}, inplace=True)
 
             # Create a colored bar chart using Plotly Express
-            fig = px.bar(df_entity_applied_total, x='Entity', y='Total_Applied', title='Total Applied by Entity', labels={'Entity': 'Entity', 'Total_Applied': 'Applications'}, color='Entity', color_discrete_map=entity_colors)
+            fig = px.bar(df_entity_applied_total, x='Entity', y='Total_Applied', title='Total Applications by Entity', labels={'Entity': 'Entity', 'Total_Applied': 'Applications'}, color='Entity', color_discrete_map=entity_colors)
 
             # Hide the legend
             fig.update_layout(showlegend=False)
@@ -250,19 +250,19 @@ def main():
             df_entity_approved_total.rename(columns={'index': 'Entity'}, inplace=True)
 
             # Create a colored bar chart using Plotly Express
-            fig_approved = px.bar(df_entity_approved_total, x='Entity', y='Total_Approved', title='Total Approved by Entity', labels={'Entity': 'Entity', 'Total_Approved': 'Approvals'},color='Entity', color_discrete_map=entity_colors)
+            fig_approved = px.bar(df_entity_approved_total, x='Entity', y='Total_Approved', title='Total Approvals by Entity', labels={'Entity': 'Entity', 'Total_Approved': 'Approvals'},color='Entity', color_discrete_map=entity_colors)
 
             # Hide the legend
             fig_approved.update_layout(showlegend=False)
 
             # Barchart 3: Unique LCs
             # Calculate total 'Unique_LCs' related to each entity
-            entity_unique_lcs_total = calculate_total_unique_lcs(data)
+            # entity_unique_lcs_total = calculate_total_unique_lcs(data)
 
-            # Convert dictionary to DataFrame
-            df_entity_unique_lcs_total = pd.DataFrame.from_dict(entity_unique_lcs_total, orient='index', columns=['Total_Unique_LCs'])
-            df_entity_unique_lcs_total.reset_index(inplace=True)
-            df_entity_unique_lcs_total.rename(columns={'index': 'Entity'}, inplace=True)
+            # # Convert dictionary to DataFrame
+            # df_entity_unique_lcs_total = pd.DataFrame.from_dict(entity_unique_lcs_total, orient='index', columns=['Total_Unique_LCs'])
+            # df_entity_unique_lcs_total.reset_index(inplace=True)
+            # df_entity_unique_lcs_total.rename(columns={'index': 'Entity'}, inplace=True)
 
             # # Create a colored bar chart using Plotly Express
             # fig_unique_lcs = px.bar(df_entity_unique_lcs_total, x='Entity', y='Total_Unique_LCs', title='Total Unique LCs by Entity', labels={'Entity': 'Entity', 'Total_Unique_LCs': 'Unique LCs'},color='Entity', color_discrete_map=entity_colors)
@@ -272,19 +272,21 @@ def main():
 
             # Display the bar charts using Plotly Chart
             # col1, col2, col3 = st.columns(3)
-            col1, col2 = st.columns(2)
+            # col1, col2 = st.columns(2)
 
-            with col1:
-                # Render the bar chart using Streamlit
-                st.plotly_chart(fig, use_container_width=True)
+            # with col1:
+            #     # Render the bar chart using Streamlit
+            #     st.plotly_chart(fig, use_container_width=True)
 
-            with col2:
-                # Render the bar chart using Streamlit
-                st.plotly_chart(fig_approved, use_container_width=True)
+            # with col2:
+            #     # Render the bar chart using Streamlit
+            #     st.plotly_chart(fig_approved, use_container_width=True)
 
             # with col3:
             #     # Render the bar chart using Streamlit
             #     st.plotly_chart(fig_unique_lcs, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig_approved, use_container_width=True)
 
             st.subheader('Functional Analysis')
 
@@ -319,16 +321,17 @@ def main():
 
             # Display the bar charts using Plotly Chart
             # col1, col2, col3 = st.columns(3)
-            col1, col2 = st.columns(2)
+            # col1, col2 = st.columns(2)
 
-            with col1:
-                # Render the bar chart using Streamlit
-                st.plotly_chart(fig_1, use_container_width=True)
+            # with col1:
+            #     # Render the bar chart using Streamlit
+            #     st.plotly_chart(fig_1, use_container_width=True)
 
-            with col2:
-                # Render the bar chart using Streamlit
-                st.plotly_chart(fig_2, use_container_width=True)
-
+            # with col2:
+            #     # Render the bar chart using Streamlit
+            #     st.plotly_chart(fig_2, use_container_width=True)
+            st.plotly_chart(fig_1, use_container_width=True)
+            st.plotly_chart(fig_2, use_container_width=True)
             # with col3:
             #     # Render the bar chart using Streamlit
             #     st.plotly_chart(fig_3, use_container_width=True)
