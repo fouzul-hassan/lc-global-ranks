@@ -7,7 +7,7 @@ import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
 
 # Loading Data
-@st.cache_data(ttl=10)  # 300 seconds = 5 minutes #1800
+@st.cache_data(ttl=5)  # 300 seconds = 5 minutes #1800
 def load_data(sheet_url):
     try:
         data = pd.read_csv(sheet_url)
@@ -47,48 +47,12 @@ def create_bar_chart(entity_sum):
     df_entity_sum.rename(columns={'index': 'Entity'}, inplace=True)
     
     # Create a bar chart using Plotly Express
-    fig = px.bar(df_entity_sum, x='Entity', y='Total', title='Total Score', labels={'Entity': 'Entity', 'Total': 'Total Points'}, color='Entity', color_discrete_map={
-                'CC': '#ffdabc',
-                'CN': '#cfbaf0',
-                'CS': '#90dbf4',
-                'USJ': '#efeaa9',
-                'Kandy': '#a3c4f3',
-                'Ruhuna': '#a6f2ae',
-                'SLIIT': '#f1c0e8',
-                'NSBM': '#8eecf5',
-                'NIBM': '#98f5e1',
-                'Rajarata': '#ffcfd2'
-    })
+    fig = px.bar(df_entity_sum, x='Entity', y='Total', title='Total Score', labels={'Entity': 'Entity', 'Total': 'Total Points'}, color='Entity')
 
             # Hide the legend
     fig.update_layout(showlegend=False)
     
     return fig
-
-
-# Function to calculate sum of points and unique LCs for each entity
-# def calculate_entity_sum(df):
-#     entity_sum = {}
-#     for index, row in df.iterrows():
-#         entity = row['Entity']
-#         app_points = row['APP_Points']
-#         apd_points = row['APD_Points']
-#         unique_lcs = row['Unique_LCs_Points']
-        
-#         if entity not in entity_sum:
-#             entity_sum[entity] = {
-#                 'APP_Points': app_points,
-#                 'APD_Points': apd_points,
-#                 'Unique_LCs_Points': unique_lcs,
-#                 'Total': app_points + apd_points + unique_lcs
-#             }
-#         else:
-#             entity_sum[entity]['APP_Points'] += app_points
-#             entity_sum[entity]['APD_Points'] += apd_points
-#             entity_sum[entity]['Unique_LCs_Points'] += unique_lcs
-#             entity_sum[entity]['Total'] += app_points + apd_points + unique_lcs
-    
-#     return entity_sum
 
 # Function to calculate the total 'Applied' related to each entity
 def calculate_total_applied(df):
@@ -114,18 +78,6 @@ def calculate_total_approved(df):
             entity_approved_total[entity] += approved
     return entity_approved_total
 
-# Function to calculate the total 'Unique_LCs' related to each entity
-# def calculate_total_unique_lcs(df):
-#     entity_unique_lcs_total = {}
-#     for index, row in df.iterrows():
-#         entity = row['Entity']
-#         unique_lcs = row['Unique_LCs']
-#         if entity not in entity_unique_lcs_total:
-#             entity_unique_lcs_total[entity] = unique_lcs
-#         else:
-#             entity_unique_lcs_total[entity] += unique_lcs
-#     return entity_unique_lcs_total
-
 # Function to calculate the count of 'Applied' related to each entity based on the selected function
 def count_applied_by_entity(df, selected_function):
     filtered_df = df[df['Function'] == selected_function]
@@ -139,13 +91,6 @@ def count_approved_by_entity(df, selected_function):
     approved_counts = filtered_df.groupby('Entity')['Approved'].sum().reset_index()
     approved_counts.rename(columns={'Approved': 'Count_Approved'}, inplace=True)
     return approved_counts
-
-# Function to calculate the count of 'Unique_LCs' related to each entity based on the selected function
-# def count_unique_lcs_by_entity(df, selected_function):
-#     filtered_df = df[df['Function'] == selected_function]
-#     unique_lcs_counts = filtered_df.groupby('Entity')['Unique_LCs'].sum().reset_index()
-#     unique_lcs_counts.rename(columns={'Unique_LCs': 'Count_Unique_LCs'}, inplace=True)
-#     return unique_lcs_counts
 
 
 icon_path = 'https://aiesec.lk/data/dist/images/favicon.png'
@@ -182,11 +127,11 @@ def show_guide():
 def main():
     st.set_page_config(
     layout="wide",
-    page_title="AP Hackathon - Leaderboard",
+    page_title="AP Hackathon - Dashboard",
     page_icon= icon_path,
     )   
 
-    st.title("AP Hackathon - Leaderboard")
+    st.title("AP Hackathon - Dashboard")
 
     # with st.expander("**Dashboard Guide**"):
     #     show_guide()
