@@ -285,8 +285,9 @@ def main():
             # with col3:
             #     # Render the bar chart using Streamlit
             #     st.plotly_chart(fig_unique_lcs, use_container_width=True)
-            st.plotly_chart(fig, use_container_width=True)
             st.plotly_chart(fig_approved, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)
+            
 
             st.subheader('Functional Analysis')
 
@@ -330,8 +331,9 @@ def main():
             # with col2:
             #     # Render the bar chart using Streamlit
             #     st.plotly_chart(fig_2, use_container_width=True)
-            st.plotly_chart(fig_1, use_container_width=True)
             st.plotly_chart(fig_2, use_container_width=True)
+            st.plotly_chart(fig_1, use_container_width=True)
+            
             # with col3:
             #     # Render the bar chart using Streamlit
             #     st.plotly_chart(fig_3, use_container_width=True)
@@ -339,6 +341,7 @@ def main():
             st.write("<br><br>", unsafe_allow_html=True)
             #Footer
             st.write("<p style='text-align: center;'>Made with ❤️ by &lt;/Dev.Team&gt; of AIESEC in Sri Lanka</p>", unsafe_allow_html=True)
+
 
         else:
             st.error("The 'Entity' column does not exist in the loaded data.")
