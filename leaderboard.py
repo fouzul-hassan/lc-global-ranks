@@ -7,7 +7,7 @@ import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
 
 # Loading Data
-@st.cache_data(ttl=5)  # 300 seconds = 5 minutes #1800
+@st.cache_data(ttl=5)  ## time to live - you can change this as it is required to be refereshed
 def load_data(sheet_url):
     try:
         data = pd.read_csv(sheet_url)
@@ -15,21 +15,6 @@ def load_data(sheet_url):
     except Exception as e:
         st.error(f"Error loading data: {str(e)}")
         return None
-
-def generate_grouped_bar_chart(data, entity):
-    # Define color map for each entity
-    
-    filtered_df = data[data['Entity'] == entity]
-    fig = px.bar(filtered_df, x='Function', y=['Applied', 'Approved', 'Unique_LCs'],
-                 title=f'Grouped Bar Chart for {entity}',
-                 labels={'value': 'Count', 'Function': 'Function'},
-                 barmode='group',
-                 )
-    
-    
-    
-    return fig
-
 
 # Function to create a bar chart based on the specified metric
 def create_bar_chart_seperate(df, entity, metric, title):
@@ -92,28 +77,11 @@ def count_approved_by_entity(df, selected_function):
     approved_counts.rename(columns={'Approved': 'Count_Approved'}, inplace=True)
     return approved_counts
 
-
 icon_path = 'https://aiesec.lk/data/dist/images/favicon.png'
-
-
-def show_guide():
-
-    st.write("1. Overall Walkthrough")
-    overall_gif = open("overall.gif", "rb").read()
-    st.image(overall_gif)
-
-    st.write("2. Wide Mode")
-    wide_gif = open("wide.gif", "rb").read()
-    st.image(wide_gif)
-
-    st.write("3. Change the Theme")
-    dark_gif = open("dark.gif", "rb").read()
-    st.image(dark_gif)
 
 def calculate_approval_ranks(df):
     # Sort the DataFrame by 'Total_Approved' column in descending order
     df_sorted = df.sort_values(by='Total_Approved', ascending=False)
-    
     # Add a new column 'Rank' to store the ranks
     df_sorted['Rank'] = range(1, len(df_sorted) + 1)
     
@@ -146,27 +114,23 @@ def display_approval_ranks(df):
 def main():
     st.set_page_config(
     layout="centered",
+    ## You can change the page title here
     page_title="AP Hackathon - Dashboard",
     page_icon= icon_path,
     )   
 
+    ## The Dashboard Title (You can change here)
     st.title("AP Hackathon - Dashboard")
-
-    # with st.expander("**Dashboard Guide**"):
-    #     show_guide()
-    #     st.write("Click the **\"Dashboard Guide\"** again to hide the guide")
 
     st_autorefresh(interval=5 * 60 * 1000, key="data_refresh")  # Set interval to 5 minutes
     # URL to your Google Sheets data
-    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ0DK7DqYpQQwLsb93-fbhDN1NhHLO9P7GNhyceIwWdj5EOFInWSflTbvDYrakkuEJlDHgDV25kP9w/pub?gid=1562137798&single=true&output=csv"
+    ## Datasource url / Google Sheets CSV
+    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTXOP09TlmTmfTCx5x7Dwgm8s80W4z7m9plWqbZ7Lfodxox-26BoTNDq-tozEQylR7jKa3UbtIjU1I1/pub?gid=1562137798&single=true&output=csv"
 
     # Load data using the cached function
     data = load_data(sheet_url)
-    # st_autorefresh(interval=5 * 60 * 1000, key="data_refresh") 
 
     if data is not None:
-        #st.write("Data loaded successfully:")
-        #st.write(data)
 
         # Check if the 'Entity' column exists in the DataFrame
         if 'Entity' in data.columns:
@@ -178,7 +142,6 @@ def main():
             df_entity_applied_total = pd.DataFrame.from_dict(entity_applied_total, orient='index', columns=['Total_Applied'])
             df_entity_applied_total.reset_index(inplace=True)
             df_entity_applied_total.rename(columns={'index': 'Entity'}, inplace=True)
-
             
             # Create a colored bar chart using Plotly Express
             fig = px.bar(df_entity_applied_total, x='Entity', y='Total_Applied', labels={'Entity': 'Entity', 'Total_Applied': 'Applications'}, color='Entity')
@@ -188,7 +151,6 @@ def main():
 
             # Use the function to display the ranks table
             
-            # Barchart 2: APD
             # Calculate total 'Approved' related to each entity
             entity_approved_total = calculate_total_approved(data)
 
@@ -196,7 +158,7 @@ def main():
             df_entity_approved_total = pd.DataFrame.from_dict(entity_approved_total, orient='index', columns=['Total_Approved'])
             df_entity_approved_total.reset_index(inplace=True)
             df_entity_approved_total.rename(columns={'index': 'Entity'}, inplace=True)
-            display_approval_ranks(df_entity_approved_total)
+
             # Create a colored bar chart using Plotly Express
             fig_approved = px.bar(df_entity_approved_total, x='Entity', y='Total_Approved', title='Total Approvals by Entity', labels={'Entity': 'Entity', 'Total_Approved': 'Approvals'},color='Entity')
             # Hide the legend
@@ -204,21 +166,19 @@ def main():
 
             st.plotly_chart(fig_approved, use_container_width=True)
             st.plotly_chart(fig, use_container_width=True)
-            
 
             st.subheader('Functional Analysis')
             # Create a select box to choose the 'Function'
             selected_function = st.selectbox('Select Function', data['Function'].unique())
             
-
-            # Barchart 4: APP by Function
             # Get the count of 'Applied' related to each entity based on the selected function
             applied_counts = count_applied_by_entity(data, selected_function)
 
             # Create a bar chart using Plotly Express
             fig_1 = px.bar(applied_counts, x='Entity', y='Count_Applied', title=f'Applications by Entity for {selected_function} Function',labels={'Entity': 'Entity', 'Count_Applied': 'Applications'}, color='Entity')
             fig_1.update_layout(showlegend=False)
-            # Barchart 5: APD by Function
+
+
             # Get the count of 'Approved' related to each entity based on the selected function
             approved_counts = count_approved_by_entity(data, selected_function)
 
@@ -231,9 +191,8 @@ def main():
             
             
             st.write("<br><br>", unsafe_allow_html=True)
-            #Footer
+            #Footer - It would be great if you could give us a recognition for the team.
             st.write("<p style='text-align: center;'>Made with ❤️ by &lt;/Dev.Team&gt; of <strong>AIESEC in Sri Lanka</strong></p>", unsafe_allow_html=True)
-
 
         else:
             st.error("The 'Entity' column does not exist in the loaded data.")
