@@ -90,11 +90,14 @@ Then you may deploy your streamlit app easily within a few steps. [Clikc here fo
 1. **Fouzul Hassan** - MCVP IM
    - [LinkedIn](https://www.linkedin.com/in/fouzul-hassan/)
    
-2. **Senuri Bandara** - Analytics Lead
+2. **Senuri Bandara** - Analytics Lead - Dev.Team
    - [LinkedIn](https://www.linkedin.com/in/senuri-bandara/)
    
-3. **Kavindu Senevirathne** - Developer Team Leader
+3. **Kavindu Senevirathne** - Software Engineer - Team Leader 
    - [LinkedIn](https://www.linkedin.com/in/kavindu-senevirathne/)
+
+4. **Sandul Renuja** - Software Engineer - Team Leader 
+   - [LinkedIn](https://www.linkedin.com/in/sandulr/)
    
-4. **Pasindu Bhanuka** - Developer
+5. **Pasindu Bhanuka** - Software Engineer
    - [LinkedIn](https://www.linkedin.com/in/pasindu-bhanuka-/)
