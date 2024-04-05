@@ -48,38 +48,54 @@ We utilize Google Sheets as a datasource and Streamlit, a Python package, for da
 5. Set up a trigger to extract data in real-time.
 
 5.1 howevr the left bar and choose the alarm/clock icon (trigger) which is in the 4th from top to down
-    5.2 Click the blue colour +Add Trigger Icon
-    5.3 You will get a prompt
-    5.4 Choose 'startProcess' in Choose which function to run
-    5.5 Choose which deployment should run is Head
-    5.6 Choose Select event source as Time-driven
-    5.7 based on your preference choose 'Select type of time based trigger' and 'Select hour interval'
+5.2 Click the blue colour +Add Trigger Icon
+5.3 You will get a prompt
+5.4 Choose ''startProcess'' in ''Choose which function to run''
+5.5 Choose ''which deployment should run'' as ''Head''
+5.6 ''Choose Select event source'' as ''Time-driven''
+5.7 based on your preference choose ''Select type of time based trigger'' and ''Select hour interval''
 
-Now the dataset is ready you can see the data realtime in the final tab.
+Now the dataset is ready you can see the data realtime in the Final tab.
 
 Additional, you may use a pivot to analys them or the usual google sheet formaulas and tricks to make a sheet dashboard.
 
 ### Publish the data to the web
 
 1. From the Google Sheet -> click File -> Share -> Publish to web
-2. Choose the speciifc tab (Final in my case) and choose csv
-
+2. Choose the specific tab (Final in my case) and choose the csv option.
 3. Then you will get a link. Copy the link and keep it with you safely
 
 ### Streamlit Instructions
 
-Better if you are using Anaconda or conda, but anyways you can create a virtual env (https://docs.streamlit.io/get-started/installation) for more deatils about the installation.
+It's better if you are using Anaconda or conda, but you can create a virtual environment [click here](https://docs.streamlit.io/get-started/installation) for more details about the installation.
 
 ### Dashboard changes the you need to do
 
 1. Fork our repo (link of the repo). (link to a doc - how to fork a repo)
 2. Clone the repo in your PC
-
 3. You may add your link that you copied when you pucblush the csv to the web in leaderboard.py
 ```python
 sheet_url = 'your link here'
 ```
 
+### Deploy Streamlit
+
 Then you can commit & push the codes
 
-Then you may deploy your streamlit app easity (link : https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app)
+Then you may deploy your streamlit app easily within a few steps. [Clikc here for the tutorials](link : https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app)
+
+
+## Team Collaborators
+
+![Hassan](https://media.licdn.com/dms/image/C4D03AQH1BIxCvtFTsg/profile-displayphoto-shrink_800_800/0/1658296759194?e=1717632000&v=beta&t=FEAvF66N066k-yO_tqJk6K79wpTHpiz8_7zdg6YjTFI)
+1. **Fouzul Hassan** - MCVP IM
+   - [LinkedIn](https://www.linkedin.com/in/fouzul-hassan/)
+   
+2. **Senuri Bandara** - Analytics Lead
+   - [LinkedIn](https://www.linkedin.com/in/senuri-bandara/)
+   
+3. **Kavindu Senevirathne** - Developer Team Leader
+   - [LinkedIn](https://www.linkedin.com/in/kavindu-senevirathne/)
+   
+4. **Pasindu Bhanuka** - Developer
+   - [LinkedIn](https://www.linkedin.com/in/pasindu-bhanuka-/)
