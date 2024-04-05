@@ -87,7 +87,8 @@ Then you may deploy your streamlit app easily within a few steps. [Clikc here fo
 
 ## Team Collaborators
 
-![Hassan](https://media.licdn.com/dms/image/C4D03AQH1BIxCvtFTsg/profile-displayphoto-shrink_800_800/0/1658296759194?e=1717632000&v=beta&t=FEAvF66N066k-yO_tqJk6K79wpTHpiz8_7zdg6YjTFI)
+![Fouzul Hassan](https://media.licdn.com/dms/image/C4D03AQH1BIxCvtFTsg/profile-displayphoto-shrink_800_800/0/1658296759194?e=1717632000&v=beta&t=FEAvF66N066k-yO_tqJk6K79wpTHpiz8_7zdg6YjTFI) ![Senuri Bandara](https://media.licdn.com/dms/image/C5603AQF4_cugH3k0Mg/profile-displayphoto-shrink_800_800/0/1640343615995?e=1717632000&v=beta&t=vwP2x7PAuOW9T8F1gKCoD99zIx4ERcW-koUf-z9kJuM) ![Kavindu Senevirathne](https://media.licdn.com/dms/image/D5603AQGNiaKPen9VpA/profile-displayphoto-shrink_800_800/0/1709876478824?e=1717632000&v=beta&t=6rwL0nX7QEq5JfpvziMw8KTzkaAas-mADOkQIGTzJEI) ![Pasindu Bhanuka](https://media.licdn.com/dms/image/D5603AQEadGKGOOJ06Q/profile-displayphoto-shrink_800_800/0/1710271260092?e=1717632000&v=beta&t=3ju1TwM--Y6Mnw6rn4WfF2YrjJSwSQzP3iesWxIQtbw)
+
 1. **Fouzul Hassan** - MCVP IM
    - [LinkedIn](https://www.linkedin.com/in/fouzul-hassan/)
    
