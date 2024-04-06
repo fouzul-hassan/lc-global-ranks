@@ -87,6 +87,21 @@ def calculate_approval_ranks(df):
     
     return df_sorted
 
+def display_leaderboard(df, total_approvals):
+    
+    
+    # Define a layout with two columns
+    col1, col2 = st.columns([2, 1])
+
+    # Display the total approvals in the first column
+    with col1:
+        st.subheader('Leaderboard')
+
+    # Display the leaderboard in the second column
+    with col2:
+        # st.metric(label="Total AP Approvals", value=total_approvals)
+        st.button(f"Total AP Approvals : **{total_approvals}**", key="no_action_button")
+    st.dataframe(df.set_index('Rank'), use_container_width=True, height=250)
 
 def display_approval_ranks(df):
     # Calculate ranks
@@ -105,9 +120,11 @@ def display_approval_ranks(df):
                                                    f"🥉 {row['Entity']}" if row['Rank'] == 3 else 
                                                    row['Entity'], axis=1)
     
-    # Display the DataFrame with medals
-    st.subheader('Leaderboard')
-    st.dataframe(df_with_ranks.set_index('Rank'), use_container_width=True, height=250)
+    # Calculate the total of the 'Total Approvals' column
+    tot_ap_approvals = df_with_ranks['Total Approvals'].sum()
+
+    #display the leaderboard section
+    display_leaderboard(df_with_ranks, tot_ap_approvals)
 
 
 # Main Streamlit app
@@ -158,7 +175,7 @@ def main():
             df_entity_approved_total = pd.DataFrame.from_dict(entity_approved_total, orient='index', columns=['Total_Approved'])
             df_entity_approved_total.reset_index(inplace=True)
             df_entity_approved_total.rename(columns={'index': 'Entity'}, inplace=True)
-
+            display_approval_ranks(df_entity_approved_total)
             # Create a colored bar chart using Plotly Express
             fig_approved = px.bar(df_entity_approved_total, x='Entity', y='Total_Approved', title='Total Approvals by Entity', labels={'Entity': 'Entity', 'Total_Approved': 'Approvals'},color='Entity')
             # Hide the legend
