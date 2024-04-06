@@ -142,7 +142,7 @@ def main():
     st_autorefresh(interval=5 * 60 * 1000, key="data_refresh")  # Set interval to 5 minutes
     # URL to your Google Sheets data
     ## Datasource url / Google Sheets CSV
-    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTXOP09TlmTmfTCx5x7Dwgm8s80W4z7m9plWqbZ7Lfodxox-26BoTNDq-tozEQylR7jKa3UbtIjU1I1/pub?gid=1562137798&single=true&output=csv"
+    sheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ0DK7DqYpQQwLsb93-fbhDN1NhHLO9P7GNhyceIwWdj5EOFInWSflTbvDYrakkuEJlDHgDV25kP9w/pub?gid=1562137798&single=true&output=csv"
 
     # Load data using the cached function
     data = load_data(sheet_url)
