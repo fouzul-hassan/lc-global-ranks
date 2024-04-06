@@ -91,7 +91,7 @@ def display_leaderboard(df, total_approvals):
     
     
     # Define a layout with two columns
-    col1, col2 = st.columns([2, 1])
+    col1, col2 = st.columns([4, 1])
 
     # Display the total approvals in the first column
     with col1:
@@ -100,7 +100,8 @@ def display_leaderboard(df, total_approvals):
     # Display the leaderboard in the second column
     with col2:
         # st.metric(label="Total AP Approvals", value=total_approvals)
-        st.button(f"Total AP Approvals : **{total_approvals}**", key="no_action_button")
+        # st.button(f"Total AP Approvals : **{total_approvals}**", key="no_action_button")
+        st.metric(label="Total AP Approvals", value=total_approvals)
     st.dataframe(df.set_index('Rank'), use_container_width=True, height=250)
 
 def display_approval_ranks(df):
