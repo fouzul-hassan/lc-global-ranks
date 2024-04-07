@@ -162,7 +162,7 @@ def main():
             df_entity_applied_total.rename(columns={'index': 'Entity'}, inplace=True)
             
             # Create a colored bar chart using Plotly Express
-            fig = px.bar(df_entity_applied_total, x='Entity', y='Total_Applied', labels={'Entity': 'Entity', 'Total_Applied': 'Applications'}, color='Entity')
+            fig = px.bar(df_entity_applied_total, x='Entity', y='Total_Applied', title='Total Applications by Entity', labels={'Entity': 'Entity', 'Total_Applied': 'Applications'}, color='Entity')
 
             # Hide the legend
             fig.update_layout(showlegend=False)
