@@ -73,19 +73,30 @@ status_options = ['APPLICANTS', 'ACCEPTED APPLICANTS', 'APPROVED', 'REALIZED', '
 product_options = ['Total', 'iGV', 'iGTa', 'iGTe', 'oGV', 'oGTa', 'oGTe']  # Replace with actual product options
 
 # Sidebar dropdowns
-selected_entity = st.sidebar.selectbox("Entity", entities)
+# options = st.multiselect(
+#     'What are your favorite colors',
+#     ['Green', 'Yellow', 'Red', 'Blue'],
+#     ['Yellow', 'Red'])
+
+selected_entity = st.sidebar.multiselect("Entity", entities, default='Sri Lanka')
+
+all_options = st.sidebar.checkbox("Select all entities")
+
+if all_options:
+    selected_entity = entities
+
+
 selected_status = st.sidebar.selectbox("Status", status_options)
 selected_product = st.sidebar.selectbox("Product", product_options)
 
 # Display selected options
-st.write("Selected Entity:", selected_entity)
-st.write("Selected Status:", selected_status)
-st.write("Selected Product:", selected_product)
+st.button(f"Selected Status: {selected_status}")
+st.button(f"Selected Product: {selected_product}")
 
 if (selected_entity == 'All'):
     filtered_data = abs_df
 else:
-    filtered_data = abs_df[(abs_df['Entity'] == selected_entity)]
+    filtered_data = abs_df[abs_df['Entity'].isin(selected_entity)]
 tranposed_abs_df = filtered_data.transpose()
 
 status_only = tranposed_abs_df.loc[(selected_status, selected_product), :]
@@ -96,9 +107,14 @@ abs_df = pd.merge(lc_only, entity_only, left_index=True, right_index=True)
 abs_df = pd.merge(abs_df, status_only, left_index=True, right_index=True)
 abs_df.columns = abs_df.columns.droplevel(level=1)
 
+abs_df['Rank'] = abs_df[selected_status].rank(ascending=False)
+abs_df['Rank'] = abs_df['Rank'].astype(int)
+abs_df = abs_df.sort_values(by='Rank')
+abs_df.set_index('Rank', inplace=True)
 
 def main():
-    st.dataframe(abs_df)
+    st.dataframe(abs_df, use_container_width=True)
+    # st.dataframe(abs_df['Rank'])
 
 
 
