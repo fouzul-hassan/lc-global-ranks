@@ -8,11 +8,6 @@ st.set_page_config(page_title="Approval Converstion Rate - Approvals", page_icon
 
 st.markdown("# Converstion Rate - Approval")
 st.sidebar.header("Converstion Rate - Approval ")
-st.write(
-    """This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!"""
-)
 
 cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
 

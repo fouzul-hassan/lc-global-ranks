@@ -8,11 +8,6 @@ st.set_page_config(page_title="Approval Converstion Rate - Finished", page_icon=
 
 st.markdown("# Converstion Rate - Finished")
 st.sidebar.header("Converstion Rate - Finished ")
-st.write(
-    """This demo illustrates a combination of plotting and animation with
-Streamlit. We're generating a bunch of random numbers in a loop for around
-5 seconds. Enjoy!"""
-)
 
 cr_fi_raw = cooking(DS_CR_FI,cr_fi_desired_headers)
 #SIDEBAR
