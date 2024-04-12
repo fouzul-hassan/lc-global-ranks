@@ -12,28 +12,94 @@ st.set_page_config(
 
 st.title('LC Global Rank - Dashboard')
 
-# Load data outside of Streamlit app initialization
-@st.cache_data(ttl=1800) 
-def load_data(data_url):
-    try:
-        data = pd.read_csv(data_url)
+#ETL
+@st.cache_data
+def cooking(dara_url, desired_headers):
+    # Create DataFrame from current headers
+    df_origin = pd.read_csv(dara_url, header=[0,1])
 
-        # Check if 'month_name' column exists
-        if 'month_name' not in data.columns:
-            st.error("Error: 'month_name' column not found in the CSV file.")
-            return None
+    # Replace headers
+    df_origin.columns = pd.MultiIndex.from_tuples(desired_headers)
 
-        data['month_name'] = pd.to_datetime(data['month_name'], format='%Y %B', errors='coerce').dt.strftime('%B %Y')
-        return data
-    except Exception as e:
-        st.error(f"An error occurred while loading data: {e}")
-        return None
+    # Remove rows with NaN values
+    df_cleaned = df_origin.dropna()
+    # drop all the CLOSED LCs
+    filtered_data = df_cleaned[~df_cleaned.iloc[:, 1].str.contains('closed', case=False)]
+    
+    return filtered_data
 
-def something():
-    st.write('something')
+#ABS
+abs_data = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS43L7E1wBBLFkrhteENsUvYm7WSXN7NGbRChxL4vXFDKd4hnnsIYLkqzuhv7iJFP0MXxV3X7eZjA4M/pub?gid=1093091800&single=true&output=csv"
+
+# Desired headers
+abs_desired_headers = [('Entity',''), ('LC',''), ('SIGN UPs', 'OGX'), ('SIGN UPs', 'oGV'),
+                       ('SIGN UPs', 'oGTa'), ('SIGN UPs', 'oGTe'),
+                       ('APPLICANTS', 'Total'), ('APPLICANTS', 'iGV'),
+                       ('APPLICANTS', 'iGTa'), ('APPLICANTS', 'iGTe'),
+                       ('APPLICANTS', 'oGV'), ('APPLICANTS', 'oGTa'),
+                       ('APPLICANTS', 'oGTe'), ('ACCEPTED APPLICANTS', 'Total'),
+                       ('ACCEPTED APPLICANTS', 'iGV'), ('ACCEPTED APPLICANTS', 'iGTa'),
+                       ('ACCEPTED APPLICANTS', 'iGTe'), ('ACCEPTED APPLICANTS', 'oGV'),
+                       ('ACCEPTED APPLICANTS', 'oGTa'), ('ACCEPTED APPLICANTS', 'oGTe'),
+                       ('APPROVED', 'Total'), ('APPROVED', 'iGV'), ('APPROVED', 'iGTa'),
+                       ('APPROVED', 'iGTe'), ('APPROVED', 'oGV'), ('APPROVED', 'oGTa'),
+                       ('APPROVED', 'oGTe'), ('REALIZED', 'Total'), ('REALIZED', 'iGV'),
+                       ('REALIZED', 'iGTa'), ('REALIZED', 'iGTe'), ('REALIZED', 'oGV'),
+                       ('REALIZED', 'oGTa'), ('REALIZED', 'oGTe'), ('FINISHED', 'Total'),
+                       ('FINISHED', 'iGV'), ('FINISHED', 'iGTa'), ('FINISHED', 'iGTe'),
+                       ('FINISHED', 'oGV'), ('FINISHED', 'oGTa'), ('FINISHED', 'oGTe'),
+                       ('COMPLETED', 'Total'), ('COMPLETED', 'iGV'),
+                       ('COMPLETED', 'iGTa'), ('COMPLETED', 'iGTe'), ('COMPLETED', 'oGV'),
+                       ('COMPLETED', 'oGTa'), ('COMPLETED', 'oGTe')]
+
+abs_df = cooking(abs_data,abs_desired_headers)
+
+# List of entities
+entities = [
+    "All",  "Sri Lanka", "Afghanistan", "Albania", "Algeria", "Andorra", "Argentina", "Australia", "Bangladesh",
+    "Bahrain", "Belgium", "Bolivia", "Brazil", "Canada", "Chile", "Colombia", "Costa Rica",
+    "Croatia", "Denmark", "Dominican Republic", "Ecuador", "El Salvador", "Ethiopia", "Finland",
+    "France", "Georgia", "Germany", "Greece", "Guatemala", "Hong Kong", "India", "Indonesia",
+    "Italy", "Japan", "Kenya", "Lebanon", "Malaysia", "Mexico", "Morocco", "Nepal", "New Zealand",
+    "Nigeria", "Pakistan", "Panama", "Paraguay", "Peru", "Philippines", "Portugal", "Russia",
+    "Rwanda", "Singapore", "South Africa", "South Korea", "Spain", "Sweden",
+    "Switzerland", "Taiwan", "Tanzania", "Thailand", "Turkey", "Uganda", "Ukraine",
+    "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan",
+    "Venezuela", "Vietnam", "Zambia", "Zimbabwe"
+]
+
+# Status and Product options (You need to replace these with your actual DataFrame)
+status_options = ['APPLICANTS', 'ACCEPTED APPLICANTS', 'APPROVED', 'REALIZED', 'FINISHED', 'COMPLETED']  # Replace with actual status column names
+product_options = ['Total', 'iGV', 'iGTa', 'iGTe', 'oGV', 'oGTa', 'oGTe']  # Replace with actual product options
+
+# Sidebar dropdowns
+selected_entity = st.sidebar.selectbox("Entity", entities)
+selected_status = st.sidebar.selectbox("Status", status_options)
+selected_product = st.sidebar.selectbox("Product", product_options)
+
+# Display selected options
+st.write("Selected Entity:", selected_entity)
+st.write("Selected Status:", selected_status)
+st.write("Selected Product:", selected_product)
+
+if (selected_entity == 'All'):
+    filtered_data = abs_df
+else:
+    filtered_data = abs_df[(abs_df['Entity'] == selected_entity)]
+tranposed_abs_df = filtered_data.transpose()
+
+status_only = tranposed_abs_df.loc[(selected_status, selected_product), :]
+entity_only = tranposed_abs_df.loc[('Entity', ''), :]
+abs = pd.merge(status_only, entity_only, left_index=True, right_index=True)
+# Print column values
+print(abs.columns.values)
+abs.columns = abs.columns.droplevel(level=1)
+
+print(abs.columns.values)
 
 def main():
-    something()
+    st.dataframe(abs)
+
 
 
 if __name__ == "__main__":
