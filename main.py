@@ -90,15 +90,15 @@ tranposed_abs_df = filtered_data.transpose()
 
 status_only = tranposed_abs_df.loc[(selected_status, selected_product), :]
 entity_only = tranposed_abs_df.loc[('Entity', ''), :]
-abs = pd.merge(status_only, entity_only, left_index=True, right_index=True)
-# Print column values
-print(abs.columns.values)
-abs.columns = abs.columns.droplevel(level=1)
+lc_only = tranposed_abs_df.loc[('LC', ''), :]
 
-print(abs.columns.values)
+abs_df = pd.merge(lc_only, entity_only, left_index=True, right_index=True)
+abs_df = pd.merge(abs_df, status_only, left_index=True, right_index=True)
+abs_df.columns = abs_df.columns.droplevel(level=1)
+
 
 def main():
-    st.dataframe(abs)
+    st.dataframe(abs_df)
 
 
 
