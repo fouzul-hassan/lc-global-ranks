@@ -73,6 +73,36 @@ global_od_index =    [(               'Entity',      ''),
             ('FINISHED TO COMPLETED',   'oGV'),
             ('FINISHED TO COMPLETED',  'oGTa'),
             ('FINISHED TO COMPLETED',  'oGTe')]
+
+caps_for_od =    [
+            (             'APPROVED', 'Total'),
+            (             'APPROVED',   'iGV'),
+            (             'APPROVED',  'iGTa'),
+            (             'APPROVED',  'iGTe'),
+            (             'APPROVED',   'oGV'),
+            (             'APPROVED',  'oGTa'),
+            (             'APPROVED',  'oGTe'),
+            (             'REALIZED', 'Total'),
+            (             'REALIZED',   'iGV'),
+            (             'REALIZED',  'iGTa'),
+            (             'REALIZED',  'iGTe'),
+            (             'REALIZED',   'oGV'),
+            (             'REALIZED',  'oGTa'),
+            (             'REALIZED',  'oGTe'),
+            ( 'APPROVED TO REALIZED', 'Total'),
+            ( 'APPROVED TO REALIZED',   'iGV'),
+            ( 'APPROVED TO REALIZED',  'iGTa'),
+            ( 'APPROVED TO REALIZED',  'iGTe'),
+            ( 'APPROVED TO REALIZED',   'oGV'),
+            ( 'APPROVED TO REALIZED',  'oGTa'),
+            ( 'APPROVED TO REALIZED',  'oGTe'),
+            ('FINISHED TO COMPLETED', 'Total'),
+            ('FINISHED TO COMPLETED',   'iGV'),
+            ('FINISHED TO COMPLETED',  'iGTa'),
+            ('FINISHED TO COMPLETED',  'iGTe'),
+            ('FINISHED TO COMPLETED',   'oGV'),
+            ('FINISHED TO COMPLETED',  'oGTa'),
+            ('FINISHED TO COMPLETED',  'oGTe')]
            
 
 #DATASOURCES
@@ -83,7 +113,7 @@ DS_CR_APD = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSItRnn06ZOIJNe0w2b
 
 DS_CR_FI = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRLWqm66H8ChjimA7wmGirTHxEpSd9v9Sz2mcNN7fdBfhWDmERbU2ig4XdXH35xE8CtFqnv2VDm_pY5/pub?gid=494749078&single=true&output=csv"
 
-OD_CAPS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSHMLbqKzIDjU0Buet4hA6FpTWVHj9Z1FJ6Xo-n6VsVe7vYel7v9cmGk9RVmrCcXGUh9GSlXUJYCDw8/pub?gid=0&single=true&output=csv"
+OD_CAPS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPwQNthVD5A-wLT1QGPsnWvbG5Z-aNZIYn4502fve7oWYxnaxV6weUpWrNcUz6F_DtO0boOe-eVWl0/pub?gid=1669770517&single=true&output=csv"
 
 ### DROP DOWN SETTINGS ###
 
