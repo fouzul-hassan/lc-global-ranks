@@ -3,14 +3,9 @@
 import streamlit as st
 import pandas as pd
 from constants import *
+import time
 
 icon_path = 'https://aiesec.lk/data/dist/images/favicon.png'
-st.set_page_config(
-    layout="centered",
-    page_title="LC Global Rank - Dashboard",
-    page_icon= icon_path,
-)
-
 st.title('LC Global Rank - Dashboard')
 
 #ETL
@@ -30,12 +25,24 @@ def cooking(dara_url, desired_headers):
     return filtered_data
 
 #CR
-abs_raw = cooking(DS_ABS,abs_desired_headers)
-cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
-cr_fi_raw = cooking(DS_CR_FI,cr_fi_desired_headers)
+
+progress_text = "Loading the data. Please wait.. !"
+my_bar = st.progress(0, text=progress_text)
+
+for percent_complete in range(100):
+    abs_raw = cooking(DS_ABS,abs_desired_headers)
+    cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
+    cr_fi_raw = cooking(DS_CR_FI,cr_fi_desired_headers)
+    time.sleep(0.01)
+    my_bar.progress(percent_complete + 1, text=progress_text)
+time.sleep(1)
+my_bar.empty()
+
+st.button("Reload")
+
 
 def main():
-
+    
     st.markdown(
         """
         You are at the right place to see where do you stand Globally !!
