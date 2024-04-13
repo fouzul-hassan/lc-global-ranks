@@ -9,6 +9,8 @@ icon_path = 'https://aiesec.lk/data/dist/images/favicon.png'
 st.title('LC Global Rank - Dashboard')
 
 #ETL
+st.toast('If this is your first time, the app might take more time to load the data!!!')
+
 @st.cache_data(ttl=None, show_spinner=True)
 def cooking(dara_url, desired_headers):
     # Create DataFrame from current headers
@@ -25,11 +27,11 @@ def cooking(dara_url, desired_headers):
     return filtered_data
 
 #CR
-
 progress_text = "Loading the data. Please wait.. !"
 my_bar = st.progress(0, text=progress_text)
 
 for percent_complete in range(100):
+    
     abs_raw = cooking(DS_ABS,abs_desired_headers)
     cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
     cr_fi_raw = cooking(DS_CR_FI,cr_fi_desired_headers)
