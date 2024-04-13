@@ -39,5 +39,16 @@ od_df2 = pd.merge(lc_only, entity_only, left_index=True, right_index=True)
 od_df2 = pd.merge(od_df2, criteria_only, left_index=True, right_index=True)
 od_df2.columns = od_df2.columns.droplevel(level=1)
 
+od_df2['Rank'] = od_df2[selected_criteria].rank(ascending=False)
+od_df2['Rank'] = od_df2['Rank'].astype(int)
+od_df2 = od_df2.sort_values(by='Rank')
+od_df2['LC'] = od_df2.apply(lambda row: 
+                                                   f"🥇 {row['LC']}" if row['Rank'] == 1 else 
+                                                   f"🥈 {row['LC']}" if row['Rank'] == 2 else 
+                                                   f"🥉 {row['LC']}" if row['Rank'] == 3 else 
+                                                   row['LC'], axis=1)
+od_df2.set_index('Rank', inplace=True)
+cr_fi_df = od_df2[od_df2['Entity'].isin(selected_entity)]
+
 
 st.dataframe(od_df2, use_container_width=True)
