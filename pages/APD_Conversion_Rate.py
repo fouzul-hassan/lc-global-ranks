@@ -9,7 +9,7 @@ st.set_page_config(page_title="Approval Converstion Rate - Approvals", page_icon
 st.markdown("# Converstion Rate - Approval")
 st.sidebar.header("Converstion Rate - Approval ")
 
-cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
+# cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
 
 #SIDEBAR
 selected_entity = st.sidebar.multiselect("Entity", entities, default='Sri Lanka')

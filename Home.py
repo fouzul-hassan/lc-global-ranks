@@ -14,7 +14,7 @@ st.set_page_config(
 st.title('LC Global Rank - Dashboard')
 
 #ETL
-@st.cache_data
+@st.cache_data(ttl=None, show_spinner=True)
 def cooking(dara_url, desired_headers):
     # Create DataFrame from current headers
     df_origin = pd.read_csv(dara_url, header=[0,1])
@@ -30,6 +30,9 @@ def cooking(dara_url, desired_headers):
     return filtered_data
 
 #CR
+abs_raw = cooking(DS_ABS,abs_desired_headers)
+cr_apd_raw = cooking(DS_CR_APD,cr_apd_desired_headers)
+cr_fi_raw = cooking(DS_CR_FI,cr_fi_desired_headers)
 
 def main():
 
@@ -39,7 +42,7 @@ def main():
         **👈 Select the options in the sidebar** to see
         the RANKs of your LCs!
         ### Ranks based on Absoloute Numbers
-        - Check out [👈 Absoloute Numbers](https://global-lc-ranks.streamlit.app/Absolute_Numbers)
+        - Check out [👈 Absoloute Numbers](https://global-lc-ranks.streamlit.app/absolute_numbers)
         ### Ranks based on Converstion Rates
         - Check out [👈 Converstion Rate Based on Approvals](https://global-lc-ranks.streamlit.app/APD_Conversion_Rate)
         - Check out [👈 Converstion Rate Based on Finished ](https://global-lc-ranks.streamlit.app/FI_Conversion_Rate)

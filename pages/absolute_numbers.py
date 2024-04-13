@@ -22,7 +22,7 @@ if all_options:
 selected_status = st.sidebar.selectbox("Status", status_options)
 selected_product = st.sidebar.selectbox("Product", product_options)
 
-abs_raw = cooking(DS_ABS,abs_desired_headers)
+# abs_raw = cooking(DS_ABS,abs_desired_headers)
 
 # print(abs_raw.columns.tolist())
 tranposed_abs_df = abs_raw.transpose()
